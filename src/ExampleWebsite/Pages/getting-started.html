@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="sort" value="0020" />
+    <title>Getting Started</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Getting Started</h1>
+    <h2 name="h2-creating-pages">Creating Pages</h2>
+    <p>
+        Pages are just static HTML pages stored in a folder on your site - by default they're in <code>~/Pages</code>.
+    </p>
+    <p>Doctrine looks for a few special HTML attributes when it's indexing and rendering your pages:</p>
+    <ul>
+        <li>The <code>&lt;title /&gt;</code> tag is used to link to the page</li>
+        <li>Any <code>&lt;h1/&gt;</code> and <code>&lt;h2 /&gt;</code> tags which have a <code>name</code> attribute will be rendered as deep links in the site navigation.</li>
+        <li>
+            If you put a <code>&lt;meta name="sort" value="XXX" /&gt;</code> in the <code>&lt;head /&gt;</code> of your HTML page,
+            Doctrine will use this to sort pages when creating the table of contents.
+        </li>
+    </ul>
+    <h2 name="h2-controlling-table-of-contents">The Table of Contents</h2>
+</body>
+</html>
