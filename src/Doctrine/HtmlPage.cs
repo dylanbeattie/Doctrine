@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using HtmlAgilityPack;
 
 namespace Doctrine {
@@ -9,7 +10,7 @@ namespace Doctrine {
 
         public static HtmlPage FromPath(string path) {
             var html = new HtmlDocument();
-            html.Load(path);
+            html.Load(path, Encoding.UTF8);
             var headNode = html.DocumentNode.SelectSingleNode("/html/head");
             var bodyNode = html.DocumentNode.SelectSingleNode("/html/body");
             var head = headNode == null ? String.Empty : headNode.InnerHtml;
