@@ -18,7 +18,10 @@
     </nav>
     <article>
         @Html.Raw(Model.Body)
-    </article>
+    </article>  
+    <footer>
+        <a href="/@Model.SourceUrl">source HTML</a>
+    </footer>
     <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

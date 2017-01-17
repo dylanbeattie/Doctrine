@@ -10,8 +10,9 @@ namespace Doctrine {
             this.host = host;
         }
         public ActionResult Index(string path) {
-            var filePath = Path.Combine(host.WebRootPath, "Pages", path + ".html");
-            var html = HtmlPage.FromPath(filePath);
+            var htmlSourcePath = $"Pages/{path}.html";
+            var filePath = Path.Combine(host.WebRootPath, htmlSourcePath);
+            var html = HtmlPage.FromPath(filePath, htmlSourcePath);
             return View("Page", html);
         }
     }

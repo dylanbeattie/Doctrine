@@ -68,6 +68,16 @@ article {
     padding: 8px;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 256px;
+    right: 0;
+    font-size: 80%;
+    text-align: right;
+    padding: 4px;
+}
+
 p, li {
     line-height: 1.4em;
 }
