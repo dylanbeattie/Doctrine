@@ -32,7 +32,6 @@ namespace ExampleWebsite {
         public void ConfigureServices(IServiceCollection services) {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
             services.AddMvc();
         }
 
@@ -42,7 +41,6 @@ namespace ExampleWebsite {
             loggerFactory.AddDebug();
 
             app.UseApplicationInsightsRequestTelemetry();
-
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
@@ -55,7 +53,6 @@ namespace ExampleWebsite {
 
             app.UseStaticFiles();
             var documentPath = Path.Combine(env.WebRootPath, "pages");
-            app.UseDoctrine(documentPath);
             app.UseDoctrine(documentPath);
             app.UseMvc(routes => {
                 routes.MapRoute(
