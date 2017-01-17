@@ -4,12 +4,13 @@
         <li>
             <a href="@entry.Href">@entry.Text</a>
             @if (entry.Children.Any()) {
-                <ul>
-                    @foreach (var child in entry.Children) {
-                        <li><a href="@child.Href">@Html.Raw(child.Text)</a></li>
-                    }
-                </ul>
+            <ul>
+                @foreach (var child in entry.Children) {
+                    <li><a href="@child.Href">@Html.Raw(child.Text)</a></li>
+                }
+            </ul>
             }
         </li>
     }
 </ul>
+

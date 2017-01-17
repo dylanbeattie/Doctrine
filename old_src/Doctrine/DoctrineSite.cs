@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Web.Mvc;
+using System.Web.Routing;
 using HtmlAgilityPack;
-using Microsoft.AspNetCore.Routing;
 
 namespace Doctrine {
     public class DoctrineSite {
+        public static List<TocEntry> Contents { get; set; }
+
         /// <summary>Initialise the Doctrine application based on the specified HTML folder path and ASP.NET MVC routing table.</summary>
         /// <param name="pathToHtmlDocs">The local qualified filesystem path where HTML documents are stored.</param>
-        public static void Init(string pathToHtmlDocs) {
+        /// <param name="routes">The ASP.NET MVC route collection used by the hosting application</param>
+        public static void Init(string pathToHtmlDocs, RouteCollection routes) {
+            routes.MapRoute("Doctrine", "{*path}", new { controller = "Doctrine", action = "Index", path = "index" });
             BeginWatchingFiles(pathToHtmlDocs);
             Contents = BuildTableOfContents(pathToHtmlDocs);
         }
 
         private static void BeginWatchingFiles(string path) {
-            const NotifyFilters filter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            const NotifyFilters filter =
+                NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName |
+                NotifyFilters.DirectoryName;
             var watcher = new FileSystemWatcher(path, "*.html") {
                 NotifyFilter = filter,
                 IncludeSubdirectories = true
@@ -29,8 +36,6 @@ namespace Doctrine {
             watcher.Renamed += rename;
             watcher.EnableRaisingEvents = true;
         }
-
-        public static List<TocEntry> Contents { get; set; }
 
         private static List<TocEntry> BuildTableOfContents(string folderPath) {
             var entries = new List<TocEntry>();
@@ -50,15 +55,15 @@ namespace Doctrine {
         }
 
         private static string MakeHref(string filePath, string folderPath) {
-            return (filePath.Remove(filePath.Length - 5).Substring(folderPath.Length).Replace('\\', '/'));
+            return filePath.Remove(filePath.Length - 5).Substring(folderPath.Length).Replace('\\', '/');
         }
 
         private static TocEntry BuildTocEntry(string filePath, string folderPath) {
             var html = new HtmlDocument();
-            using (var stream = File.OpenRead(filePath)) html.Load(stream);
+            html.Load(filePath);
             var titleNode = html.DocumentNode.SelectSingleNode("/html/head/title");
             var href = MakeHref(filePath, folderPath);
-            var entry = new TocEntry() {
+            var entry = new TocEntry {
                 Href = href,
                 Text = titleNode?.InnerText ?? href
             };
@@ -66,11 +71,13 @@ namespace Doctrine {
             var sortNode = html.DocumentNode.SelectSingleNode("//meta[@name='sort']");
             entry.Sort = sortNode?.Attributes["value"]?.Value ?? "ZZZZZZZZ";
             var headings = html.DocumentNode.SelectNodes("//h1[@id] | //h2[@id]");
-            entry.Children = headings == null ? new List<TocEntry>() : headings.Select(node => new TocEntry {
-                Text = node.InnerText,
-                Href = href + "#" + node.Attributes["id"].Value,
-                Name = node.Name
-            }).ToList();
+            entry.Children = headings == null
+                ? new List<TocEntry>()
+                : headings.Select(node => new TocEntry {
+                    Text = node.InnerText,
+                    Href = href + "#" + node.Attributes["id"].Value,
+                    Name = node.Name
+                }).ToList();
             return entry;
         }
     }
