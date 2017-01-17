@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using HtmlAgilityPack;
 
@@ -12,9 +11,9 @@ namespace Doctrine {
             html.Load(path, Encoding.UTF8);
             var headNode = html.DocumentNode.SelectSingleNode("/html/head");
             var bodyNode = html.DocumentNode.SelectSingleNode("/html/body");
-            var head = headNode == null ? String.Empty : headNode.InnerHtml;
-            var body = bodyNode == null ? String.Empty : bodyNode.InnerHtml;
-            return new HtmlPage() {
+            var head = headNode == null ? string.Empty : headNode.InnerHtml;
+            var body = bodyNode == null ? string.Empty : bodyNode.InnerHtml;
+            return new HtmlPage {
                 Head = head,
                 Body = body
             };
