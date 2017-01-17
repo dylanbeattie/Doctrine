@@ -51,7 +51,9 @@
   "runtimes": {
     "win10-x64": {},
     "win7-x64": {},
-    "win8-x64": {}
+    "win8-x64": {},
+    "win7-x86": {},
+    "win8-x86": {}
   },
 
   "publishOptions": {
