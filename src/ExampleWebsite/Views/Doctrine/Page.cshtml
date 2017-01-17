@@ -2,19 +2,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="@Url.Content("~/css/styles.css")" />
+    <link type="text/css" rel="stylesheet" href="~/css/styles.css" />
     <base href="/pages/" />
+    <link href="~/js/styles/obsidian.css" rel="stylesheet" />
+    <script src="~/js/highlight.pack.js"></script>
     @Html.Raw(Model.Head)
 </head>
 <body>
     <header>
         <h1>doctrine: super simple documentation</h1>
     </header>
+
     <nav>
         @Html.Partial("Contents")
     </nav>
     <article>
         @Html.Raw(Model.Body)
     </article>
+    <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
