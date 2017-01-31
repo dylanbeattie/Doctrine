@@ -68,7 +68,7 @@ namespace Doctrine {
 
             var sortNode = html.DocumentNode.SelectSingleNode("//meta[@name='sort']");
             entry.Sort = sortNode?.Attributes["value"]?.Value ?? "ZZZZZZZZ";
-            var headings = html.DocumentNode.SelectNodes("//h1[@id] | //h2[@id]");
+            var headings = html.DocumentNode.SelectNodes("//h1[@id] | //h2[@id] | //h3[@id] | //h4[@id]");
             entry.Children = headings == null ? new List<TocEntry>() : headings.Select(node => new TocEntry {
                 Text = node.InnerText,
                 Href = href + "#" + node.Attributes["id"].Value,
