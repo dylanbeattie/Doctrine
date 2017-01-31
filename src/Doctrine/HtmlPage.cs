@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
 
@@ -13,20 +11,12 @@ namespace Doctrine {
             html.Load(path, Encoding.UTF8);
             var headNode = html.DocumentNode.SelectSingleNode("/html/head");
             var bodyNode = html.DocumentNode.SelectSingleNode("/html/body");
-            var head = headNode == null ? String.Empty : headNode.InnerHtml;
-            var body = bodyNode == null ? String.Empty : bodyNode.InnerHtml;
-            return new HtmlPage() {
+            var head = headNode == null ? string.Empty : headNode.InnerHtml;
+            var body = bodyNode == null ? string.Empty : bodyNode.InnerHtml;
+            return new HtmlPage {
                 Head = head,
                 Body = body
             };
         }
-    }
-
-    public class TocEntry {
-        public string Sort { get; set; }
-        public string Text { get; set; }
-        public string Href { get; set; }
-        public string Name { get; set; }
-        public IList<TocEntry> Children { get; set; }
     }
 }
